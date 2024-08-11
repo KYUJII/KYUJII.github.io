@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cara a Cara</title>
+    <style>
+        /* Estilo geral do corpo */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0; /* Cor de fundo clara */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Estilo do título principal */
+        .titulo-principal {
+            font-size: 2em;
+            color: #333; /* Cor de texto escura */
+            margin-bottom: 20px;
+        }
+
+        /* Container das imagens com rolagem vertical */
+        .imagem-container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr); /* 4 colunas */
+            gap: 10px;
+            max-width: 100%;
+            max-height: 70vh; /* Ajuste para rolar verticalmente em telas menores */
+            overflow-y: auto; /* Adiciona rolagem vertical */
+            padding: 10px;
+        }
+
+        /* Estilo das caixas de imagem */
+        .caixa {
+            width: 100%;
+            aspect-ratio: 1 / 1; /* Mantém a proporção quadrada */
+            overflow: hidden;
+            border-radius: 8px;
+            cursor: pointer;
+            border: 2px solid #ddd; /* Borda das imagens */
+            position: relative; /* Necessário para o posicionamento do overlay */
+        }
+
+        /* Estilo das imagens */
+        .imagem-caixa {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: opacity 0.3s ease; /* Transição suave para a opacidade */
+        }
+
+        /* Estilo da imagem final */
+        .escolha-container {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .escolha-imagem {
+            width: 200px;
+            height: 200px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            object-fit: cover;
+        }
+
+        /* Estilo do botão de confirmação */
+        .botao-container {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .botao {
+            background-color: #007bff; /* Cor de fundo do botão */
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .botao:hover {
+            background-color: #0056b3; /* Cor de fundo do botão ao passar o mouse */
+        }
+
+        /* Estilo do pop-up */
+        .dialogo {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 20px;
+            border: 1px solid #ccc;
+            z-index: 1000;
+            display: none;
+            border-radius: 8px;
+        }
+
+        .dialogo button {
+            margin-top: 10px;
+            background-color: #28a745; /* Cor de fundo do botão de confirmar */
+            border: none;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .dialogo button:hover {
+            background-color: #218838; /* Cor do botão de confirmar ao passar o mouse */
+        }
+
+        /* Estilo do botão de mostrar logs */
+        .logs-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #6c757d; /* Cor de fundo do botão de logs */
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .logs-button:hover {
+            background-color: #5a6268; /* Cor do botão de logs ao passar o mouse */
+        }
+
+        .logs {
+            position: fixed;
+            bottom: 70px;
+            right: 20px;
+            background-color: white;
+            border: 1px solid #ccc;
+            padding: 10px;
+            max-height: 300px;
+            overflow-y: auto;
+            display: none;
+            z-index: 1001;
+            border-radius: 8px;
+        }
+
+        .logs p {
+            margin: 0;
+            padding: 5px 0;
+        }
+
+        /* Estilo do botão para mostrar/esconder imagem escolhida */
+        .mostrar-imagem-button {
+            margin-top: 20px;
+            background-color: #dc3545; /* Cor de fundo do botão de mostrar/esconder imagem escolhida */
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .mostrar-imagem-button:hover {
+            background-color: #c82333; /* Cor do botão de mostrar/esconder imagem escolhida ao passar o mouse */
+        }
+
+        @media (max-width: 600px) {
+            .caixa {
+                width: 80px;
+                height: 80px;
+            }
+
+            .escolha-imagem {
+                width: 150px;
+                height: 150px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1 class="titulo-principal">Cara a Cara</h1>
+
+    <div class="imagem-container">
+        <!-- Adicione aqui 20 imagens -->
+        <div class="caixa"><img src="img/DC/batman.jpg" alt="Imagem 1" class="imagem-caixa"></div>
+        <div class="caixa"><img src="img/DC/superman.jpg" alt="Imagem 2" class="imagem-caixa"></div>
+        <div class="caixa"><img src="img/DC/supergirl.jpg" alt="Imagem 3" class="imagem-caixa"></div>
+        <div class="caixa"><img src="img/DC/flash.jpg" alt="Imagem 4" class="imagem-caixa"></div>
+        <div class="caixa"><img src="img/marvel/homem_de_ferro.jpg" alt="Imagem 5" class="imagem-caixa"></div>
+        <div class="caixa"><img src="img/marvel/capitao_america.jpg" alt="Imagem 6" class="imagem-caixa"></div>
+        <div class="caixa"><img src="img/marvel/homem_aranha.jpg" alt="Imagem 7" class="imagem-caixa"></div>
+        <div class="caixa"><img src="img/marvel/hulk.jpg" alt="Imagem 8" class="imagem-caixa"></div>
+        <div class="caixa"><img src="img/DC/laterna_verde.jpg" alt="Imagem 9" class="imagem-caixa"></div>
+        <div class="caixa"><img src="img/DC/mulher_maravinha.jpg" alt="Imagem 10" class="imagem-caixa"></div>
+        <div class="caixa"><img src="img/DC/batgirl.jpg" alt="Imagem 11" class="imagem-caixa"></div>
+        <div class="caixa"><img src="img/DC/robin.jpg" alt="Imagem 12" class="imagem-caixa"></div>
+        <div class="caixa"><img src="img/marvel/deadpool.jpg" alt="Imagem 13" class="imagem-caixa"></div>
+        <div class="caixa"><img src="img/marvel/Wolverine.jpg" alt="Imagem 14" class="imagem-caixa"></div>
+        <div class="caixa"><img src="img/marvel/thor.jpg" alt="Imagem 15" class="imagem-caixa"></div>
+        <div class="caixa"><img src="img/marvel/pantera_negra.jpg" alt="Imagem 16" class="imagem-caixa"></div>
+        <div class="caixa"><img src="img/DC/asa_nortuna.jpg" alt="Imagem 17" class="imagem-caixa"></div>
+        <div class="caixa"><img src="img/DC/mulher_gato.jpg" alt="Imagem 18" class="imagem-caixa"></div>
+        <div class="caixa"><img src="img/marvel/doutor_estranho.jpg" alt="Imagem 19" class="imagem-caixa"></div>
+        <div class="caixa"><img src="img/marvel/star_lord.jpg" alt="Imagem 20" class="imagem-caixa"></div>
+    </div>
+
+    <div class="escolha-container">
+        <img src="" alt="Imagem selecionada" id="tela" class="escolha-imagem" style="display:none;">
+    </div>
+
+    <div class="botao-container">
+        <button class="botao" id="mostrar-logs">Mostrar Logs</button>
+        <button class="mostrar-imagem-button" id="toggle-imagem">Mostrar Imagem Escolhida</button>
+    </div>
+
+    <div id="dialogo" class="dialogo">
+        <p>Você tem certeza de que deseja escolher esta imagem?</p>
+        <button id="confirmar">Confirmar</button>
+        <button id="cancelar">Cancelar</button>
+    </div>
+
+    <div id="logs" class="logs"></div>
+
+    <script>
+        const caixa = document.querySelectorAll('.caixa');
+        const dialogo = document.getElementById('dialogo');
+        const confirmarBtn = document.getElementById('confirmar');
+        const cancelarBtn = document.getElementById('cancelar');
+        const tela = document.getElementById('tela');
+        const mostrarLogsBtn = document.getElementById('mostrar-logs');
+        const logsContainer = document.getElementById('logs');
+        const toggleImagemBtn = document.getElementById('toggle-imagem');
+        let imagemSelecionada = null;
+        let timeout;
+        const logs = [];
+
+        function showConfirmationDialog() {
+            dialogo.style.display = 'block';
+        }
+
+        function closeConfirmationDialog() {
+            dialogo.style.display = 'none';
+        }
+
+        function updateLogs() {
+            logsContainer.innerHTML = '<h3>Logs de Seleção</h3>' + logs.map(log => `<p>${log}</p>`).join('');
+        }
+
+        function selectImage(event) {
+            const img = event.currentTarget.querySelector('img');
+            if (imagemSelecionada) {
+                imagemSelecionada.classList.remove('escolhida');
+                imagemSelecionada.style.opacity = 1; // Remove a transparência da imagem selecionada anteriormente
+            }
+            img.classList.add('escolhida');
+            img.style.opacity = 1; // Garante que a imagem selecionada fique opaca
+            imagemSelecionada = img;
+            tela.src = img.src;
+            tela.style.display = 'block';
+            showConfirmationDialog();
+        }
+
+        caixa.forEach(caixa => {
+            caixa.addEventListener('mousedown', (event) => {
+                timeout = setTimeout(() => {
+                    selectImage(event);
+                }, 2000); // 2 segundos
+            });
+
+            caixa.addEventListener('mouseup', () => clearTimeout(timeout));
+            caixa.addEventListener('mouseleave', () => clearTimeout(timeout));
+
+            caixa.addEventListener('dblclick', function () {
+                const img = this.querySelector('img');
+                if (!img.classList.contains('escolhida')) {
+                    selectImage({ currentTarget: this });
+                }
+            });
+
+            caixa.addEventListener('click', function () {
+                const img = this.querySelector('img');
+                if (!img.classList.contains('escolhida')) {
+                    img.style.opacity = img.style.opacity === '0.5' ? '1' : '0.5';
+                }
+            });
+        });
+
+        confirmarBtn.addEventListener('click', function () {
+            if (imagemSelecionada) {
+                logs.push(`Imagem escolhida: ${imagemSelecionada.src}`);
+                updateLogs();
+                closeConfirmationDialog();
+            }
+        });
+
+        cancelarBtn.addEventListener('click', function () {
+            if (imagemSelecionada) {
+                imagemSelecionada.classList.remove('escolhida');
+                imagemSelecionada.style.opacity = 1; // Remove a transparência da imagem selecionada
+                tela.style.display = 'none';
+            }
+            closeConfirmationDialog();
+        });
+
+        mostrarLogsBtn.addEventListener('click', function () {
+            if (logsContainer.style.display === 'none' || logsContainer.style.display === '') {
+                logsContainer.style.display = 'block';
+                mostrarLogsBtn.textContent = 'Ocultar Logs';
+            } else {
+                logsContainer.style.display = 'none';
+                mostrarLogsBtn.textContent = 'Mostrar Logs';
+            }
+        });
+
+        toggleImagemBtn.addEventListener('click', function () {
+            if (tela.style.display === 'none' || tela.style.display === '') {
+                tela.style.display = 'block';
+                toggleImagemBtn.textContent = 'Ocultar Imagem Escolhida';
+            } else {
+                tela.style.display = 'none';
+                toggleImagemBtn.textContent = 'Mostrar Imagem Escolhida';
+            }
+        });
+
+        logsContainer.style.display = 'none';
+        tela.style.display = 'none';
+    </script>
+</body>
+</html>
